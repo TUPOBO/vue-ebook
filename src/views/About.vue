@@ -7,7 +7,8 @@
 </template>
 
 <style>
-h1 {
-  font-family: "Days One";
-}
+  h1 {
+    font-family: "Days One";
+  }
+
 </style>
