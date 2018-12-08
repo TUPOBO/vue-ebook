@@ -1,48 +1,49 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <span class="text">Abcdef</span>
   </div>
 </template>
 
 <script>
-  export default {}
-  document.addEventListener('DOMContentLoaded', () => {
-    let html = document.querySelector('html')
-    let fontSize = window.innerWidth / 10
-    fontSize = fontSize > 50 ? 50 : fontSize
-    html.style.fontSize = fontSize + 'px'
+import { mapGetters } from 'vuex'
+const getters = {
+  a: () => 1,
+  b: () => 2
+}
+function fn(keys) {
+  const date = {}
+  keys.map(key => {
+    if (getters.hasOwnProperty(key)) {
+      date[key] = getters[key]
+    }
   })
-
+  return date
+}
+export default {
+  computed: {
+    ...mapGetters(['test']),
+    ...fn(['a', 'b', 'c'])
+  },
+  mounted() {
+    this.$store.dispatch('setTest', 20).then(() => {
+      console.log(this.test)
+    })
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  let html = document.querySelector('html')
+  let fontSize = window.innerWidth / 10
+  fontSize = fontSize > 50 ? 50 : fontSize
+  html.style.fontSize = fontSize + 'px'
+})
 </script>
 
-<style lang='scss'>
-  @import './assets/styles/global.scss';
+<style lang="scss">
+@import './assets/styles/global.scss';
 
-  #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
-
-  #nav {
-    padding: 30px;
-    font-size: px2rem(20);
-
-  }
-
-  #nav a {
-    font-weight: bold;
-    color: #2c3e50;
-  }
-
-  #nav a.router-link-exact-active {
-    color: #42b983;
-  }
-
+.text {
+  font-family: 'Days One';
+  font-size: px2rem(20);
+  color: red;
+}
 </style>
