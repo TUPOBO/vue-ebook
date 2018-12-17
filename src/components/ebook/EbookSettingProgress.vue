@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="text-wrapper">
-          <span>{{ bookAvailable ? progress + '%' : '加载中...' }}</span>
+          <span>{{ bookAvailable ? progress + '%' : '� 载中...' }}</span>
         </div>
       </div>
     </div>
@@ -42,10 +42,33 @@ export default {
   },
   mixins: [ebookMixin],
   methods: {
-    onProgressChange(progress) {},
-    onProgressInput(progress) {},
+    onProgressChange(progress) {
+      this.setProgress(progress).then(() => {
+        this.displayProgress()
+        this.updateProgressBg()
+      })
+    },
+    // ??????????????text
+    onProgressInput(progress) {
+      this.setProgress(progress).then(() => {
+        this.updateProgressBg()
+      })
+    },
+    // ??????????
+    displayProgress() {
+      const cfi = this.currentBook.locations.cfiFromPercentage(
+        this.progress / 100
+      )
+      this.currentBook.rendition.display(cfi)
+    },
+    updateProgressBg() {
+      this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
+    },
     prevSection() {},
     nextSection() {}
+  },
+  updated() {
+    this.updateProgressBg()
   }
 }
 </script>
@@ -89,8 +112,6 @@ export default {
         width: 100%;
         -webkit-appearance: none;
         height: px2rem(2);
-        background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
-        background-size: 0 100% !important;
         &:focus {
           outline: none;
         }
