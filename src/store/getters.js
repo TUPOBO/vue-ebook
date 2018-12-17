@@ -8,7 +8,8 @@ const getters = {
   fontFamilyVisible: state => state.book.fontFamilyVisible,
   defaultTheme: state => state.book.defaultTheme,
   progress: state => state.book.progress,
-  bookAvailable: state => state.book.bookAvailable
+  bookAvailable: state => state.book.bookAvailable,
+  section: state => state.book.section
 }
 
 export default getters

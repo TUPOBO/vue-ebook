@@ -28,6 +28,9 @@ const actions = {
   },
   setBookAvailable({ commit }, bookAvailable) {
     commit('SET_BOOK_AVAILABLE', bookAvailable)
+  },
+  setSection({ commit }, section) {
+    commit('SET_SECTION', section)
   }
 }
 

@@ -9,7 +9,8 @@ const book = {
     fontFamilyVisible: false,
     defaultTheme: 'Default',
     progress: 0,
-    bookAvailable: false
+    bookAvailable: false,
+    section: 3
   },
   mutations: {
     SET_FILENAME: (state, newFileName) => {
@@ -41,6 +42,9 @@ const book = {
     },
     SET_BOOK_AVAILABLE: (state, bookAvailable) => {
       state.bookAvailable = bookAvailable
+    },
+    SET_SECTION: (state, section) => {
+      state.section = section
     }
   }
 }
