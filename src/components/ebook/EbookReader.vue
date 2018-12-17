@@ -50,9 +50,9 @@ export default {
       })
       this.rendition.display().then(() => {
         this.initTheme()
+        this.initGlobalStyle()
         this.initFontFamily()
         this.initFontSize()
-        this.initGlobalStyle()
       })
       // 添加阅读器字体css文件
       this.rendition.hooks.content.register(contents => {
