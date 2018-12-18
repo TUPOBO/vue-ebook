@@ -31,6 +31,9 @@ const actions = {
   },
   setSection({ commit }, section) {
     commit('SET_SECTION', section)
+  },
+  setCover({ commit }, cover) {
+    commit('SET_COVER', cover)
   }
 }
 

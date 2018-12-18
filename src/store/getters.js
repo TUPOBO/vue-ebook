@@ -9,7 +9,8 @@ const getters = {
   defaultTheme: state => state.book.defaultTheme,
   progress: state => state.book.progress,
   bookAvailable: state => state.book.bookAvailable,
-  section: state => state.book.section
+  section: state => state.book.section,
+  cover: state => state.book.cover
 }
 
 export default getters
