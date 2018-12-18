@@ -11,7 +11,8 @@ const book = {
     progress: 0,
     bookAvailable: false,
     section: 0,
-    cover: null
+    cover: null,
+    metadata: null
   },
   mutations: {
     SET_FILENAME: (state, newFileName) => {
@@ -49,6 +50,9 @@ const book = {
     },
     SET_COVER: (state, cover) => {
       state.cover = cover
+    },
+    SET_METADATA: (state, metadata) => {
+      state.metadata = metadata
     }
   }
 }

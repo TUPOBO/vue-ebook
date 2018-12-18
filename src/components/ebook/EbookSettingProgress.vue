@@ -28,7 +28,7 @@
         </div>
         <div class="text-wrapper">
           <span class="progress-section-text">{{getSectionName}}</span>
-          <span>({{ bookAvailable ? progress + '%' : '加载中...' }})</span>
+          <span>({{ bookAvailable ? progress + '%' : '� 载中...' }})</span>
         </div>
       </div>
     </div>
@@ -48,7 +48,12 @@ export default {
       let sectionName = ''
       if (this.bookAvailable && this.section) {
         const sectionInfo = this.currentBook.section(this.section)
-        if (sectionInfo && sectionInfo.href) {
+        if (
+          sectionInfo &&
+          sectionInfo.href &&
+          this.currentBook &&
+          this.currentBook.navigation
+        ) {
           sectionName = this.currentBook.navigation.get(sectionInfo.href).label
         }
       }

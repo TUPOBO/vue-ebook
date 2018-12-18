@@ -34,6 +34,9 @@ const actions = {
   },
   setCover({ commit }, cover) {
     commit('SET_COVER', cover)
+  },
+  setMetadata({ commit }, metadata) {
+    commit('SET_METADATA', metadata)
   }
 }
 

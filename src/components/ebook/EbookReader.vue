@@ -29,6 +29,8 @@ export default {
       this.initRendition()
       // 手势操作
       this.initGesture()
+      // 解析图书
+      this.parseBook()
       // 分页逻辑
       this.book.ready
         .then(() => {
@@ -158,6 +160,23 @@ export default {
         this.rendition.themes.register(theme.name, theme.style)
       })
       this.rendition.themes.select(defaultTheme)
+    },
+
+    // 获取图书信息
+    parseBook() {
+      // 获取图书封面
+      this.book.loaded.cover.then(cover => {
+        this.book.archive.createUrl(cover).then(url => {
+          this.setCover(url)
+        })
+      })
+      // 获取图书作者等信息
+      this.book.loaded.metadata.then(metadata => {
+        console.log(metadata)
+        this.setMetadata(metadata).then(() => {
+          console.log(this.metadata)
+        })
+      })
     }
   },
   mounted() {
