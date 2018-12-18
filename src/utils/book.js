@@ -85,6 +85,7 @@ export function removeCss(href) {
 }
 
 export function removeAllCss() {
+  console.log('remove')
   removeCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
   removeCss(`${process.env.VUE_APP_RES_URL}/theme/theme_eye.css`)
   removeCss(`${process.env.VUE_APP_RES_URL}/theme/theme_gold.css`)
