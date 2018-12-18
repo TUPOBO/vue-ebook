@@ -13,7 +13,8 @@ import {
   getFontSize,
   saveFontSize,
   getTheme,
-  saveTheme
+  saveTheme,
+  getLocation
 } from '@/utils/localStorage'
 global.ePub = Epub
 export default {
@@ -38,6 +39,7 @@ export default {
         .then(locations => {
           // console.log(locations)
           this.setBookAvailable(true)
+          this.refreshLocation()
         })
     },
 
@@ -48,12 +50,15 @@ export default {
         height: innerHeight,
         methods: 'default' // 微信兼容性配置，在其浏览器上正常显示
       })
-      this.rendition.display().then(() => {
+      const location = getLocation(this.fileName)
+      this.display(location, () => {
         this.initTheme()
         this.initGlobalStyle()
         this.initFontFamily()
         this.initFontSize()
+        this.refreshLocation()
       })
+
       // 添加阅读器字体css文件
       this.rendition.hooks.content.register(contents => {
         Promise.all([
@@ -98,14 +103,18 @@ export default {
     prePage() {
       if (this.rendition) {
         this.hideTittleAndMenu()
-        this.rendition.prev()
+        this.rendition.prev().then(() => {
+          this.refreshLocation()
+        })
       }
     },
 
     nextPage() {
       if (this.rendition) {
         this.hideTittleAndMenu()
-        this.rendition.next()
+        this.rendition.next().then(() => {
+          this.refreshLocation()
+        })
       }
     },
 

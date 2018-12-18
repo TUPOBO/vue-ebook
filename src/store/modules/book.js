@@ -10,7 +10,7 @@ const book = {
     defaultTheme: 'Default',
     progress: 0,
     bookAvailable: false,
-    section: 3
+    section: 0
   },
   mutations: {
     SET_FILENAME: (state, newFileName) => {
