@@ -126,12 +126,6 @@ export default {
       this.setTittleVisible(!this.tittleVisible)
     },
 
-    hideTittleAndMenu() {
-      this.setTittleVisible(false)
-      this.setSettingVisible(-1)
-      this.setFontFamilyVisible(false)
-    },
-
     initFontFamily() {
       let font = getFontFamily(this.fileName)
       if (!font) {

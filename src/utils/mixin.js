@@ -79,6 +79,12 @@ export const ebookMixin = {
           }
         })
       }
+    },
+    hideTittleAndMenu() {
+      console.log('hide')
+      this.setTittleVisible(false)
+      this.setSettingVisible(-1)
+      this.setFontFamilyVisible(false)
     }
   }
 }
