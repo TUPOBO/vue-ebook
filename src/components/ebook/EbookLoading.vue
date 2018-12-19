@@ -45,7 +45,7 @@ export default {
         const line = this.$refs.line[index]
         let maskWidth = this.maskWidth[index]
         let lineWidth = this.lineWidth[index]
-        if (index == 0) {
+        if (index === 0) {
           if (this.add && maskWidth.value < 16) {
             maskWidth.value++
             lineWidth.value--

@@ -40,6 +40,9 @@ const actions = {
   },
   setNavigation({ commit }, navigation) {
     commit('SET_NAVIGATION', navigation)
+  },
+  setOffsetY({ commit }, offsetY) {
+    commit('SET_OFFSET_Y', offsetY)
   }
 }
 

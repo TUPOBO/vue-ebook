@@ -96,7 +96,7 @@ export default {
       }
     },
     // 点击搜索结果或目录列表后，跳转相应位置，并自动隐藏侧边栏
-    displayContent(target, highlight = 'false') {
+    displayContent(target, highlight = false) {
       this.display(target, () => {
         this.hideTittleAndMenu()
         if (highlight) {

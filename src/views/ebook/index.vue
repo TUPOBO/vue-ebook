@@ -1,5 +1,5 @@
 <template>
-  <div class="ebook">
+  <div class="ebook" ref="ebook">
     <ebook-tittle></ebook-tittle>
     <ebook-reader></ebook-reader>
     <ebook-menu></ebook-menu>
@@ -19,6 +19,15 @@ export default {
     EbookTittle,
     EbookMenu
   },
+  watch: {
+    offsetY(v) {
+      if (v > 0) {
+        this.move(v)
+      } else if (v === 0) {
+        this.restore()
+      }
+    }
+  },
   methods: {
     startLoopReadTime() {
       let readTime = getReadTime(this.fileName)
@@ -31,6 +40,16 @@ export default {
           saveReadTime(this.fileName, readTime)
         }
       }, 1000)
+    },
+    move(v) {
+      this.$refs.ebook.style.top = `${v}px`
+    },
+    restore() {
+      this.$refs.ebook.style.top = 0
+      this.$refs.ebook.style.transition = `all .2s linear`
+      setTimeout(() => {
+        this.$refs.ebook.style.transition = ''
+      }, 200)
     }
   },
   mounted() {
@@ -48,6 +67,9 @@ export default {
 @import '../../assets/styles/global';
 
 .ebook {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 }

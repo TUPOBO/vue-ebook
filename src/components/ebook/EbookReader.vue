@@ -1,6 +1,12 @@
 <template>
   <div class="ebook-reader">
     <div id="reader"></div>
+    <div
+      class="ebook-reader-mask"
+      @click="onMaskClick($event)"
+      @touchmove.stop.prevent="move"
+      @touchend="moveEnd"
+    ></div>
   </div>
 </template>
 
@@ -194,15 +200,57 @@ export default {
         })
         this.setNavigation(navItem)
       })
+    },
+
+    // 翻页和菜单栏
+    onMaskClick(event) {
+      const offsetX = event.offsetX
+      const width = window.innerWidth
+      if (offsetX > 0 && offsetX < width * 0.3) {
+        this.prePage()
+      } else if (offsetX > 0 && offsetX > width * 0.7) {
+        this.nextPage()
+      } else {
+        this.toggleTittleAndMenu()
+      }
+    },
+
+    move(event) {
+      let offsetY = 0
+      if (this.firstOffsetY) {
+        offsetY = event.changedTouches[0].clientY - this.firstOffsetY
+        this.setOffsetY(offsetY)
+      } else {
+        this.firstOffsetY = event.changedTouches[0].clientY
+      }
+    },
+
+    moveEnd(event) {
+      this.setOffsetY(0)
+      this.firstOffsetY = null
     }
   },
   mounted() {
-    console.log(this.fileName)
     this.setFileName(this.$route.params.fileName.split('|').join('/'))
     this.initEpub()
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/styles/global.scss';
+.ebook-reader {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .ebook-reader-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 150;
+  }
+}
 </style>
