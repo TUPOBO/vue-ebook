@@ -34,16 +34,32 @@
         <div class="slide-contents-book-time">{{getReadTimeText()}}</div>
       </div>
     </div>
+    <scroll class="slide-contents-list" :top="156" :bottom="48" ref="scroll">
+      <div class="slide-contents-item" v-for="(item, index) in navigation" :key="index">
+        <span
+          class="slide-contents-item-label"
+          :class="{'selected': section === index}"
+          :style="contentItemStyle(item)"
+          @click="displayNavigation(item.href)"
+        >{{item.label}}</span>
+        <span class="slide-contents-item-page"></span>
+      </div>
+    </scroll>
   </div>
 </template>|
 
 <script>
 import { ebookMixin } from '@/utils/mixin'
+import Scroll from '../common/Scroll'
+import { px2rem } from '@/utils/utils'
 export default {
   data() {
     return {
       searchVisible: false
     }
+  },
+  components: {
+    Scroll
   },
   mixins: [ebookMixin],
   methods: {
@@ -52,6 +68,16 @@ export default {
     },
     hideSearchPage() {
       this.searchVisible = false
+    },
+    contentItemStyle(item) {
+      return {
+        marginLeft: `${px2rem(item.level * 15)}rem`
+      }
+    },
+    displayNavigation(target) {
+      this.display(target, () => {
+        this.hideTittleAndMenu()
+      })
     }
   }
 }
@@ -65,7 +91,7 @@ export default {
   .slide-contents-search-wrapper {
     display: flex;
     width: 100%;
-    height: px2rem(48);
+    height: px2rem(36);
     margin: px2rem(20) 0 px2rem(10) 0;
     padding: 0 px2rem(15);
     box-sizing: border-box;
@@ -121,7 +147,7 @@ export default {
         width: px2rem(153.75);
         font-size: px2rem(12);
         @include ellipsis;
-        margin: px2rem(10) 0;
+        margin-top: px2rem(10);
       }
     }
     .slide-contents-book-progress-wrapper {
@@ -137,6 +163,23 @@ export default {
       .slide-contents-book-time {
         font-size: px2rem(12);
         margin-top: px2rem(5);
+      }
+    }
+  }
+  .slide-contents-list {
+    padding: 0 px2rem(15);
+    box-sizing: border-box;
+    .slide-contents-item {
+      display: flex;
+      padding: px2rem(20) 0;
+      box-sizing: border-box;
+      .slide-contents-item-label {
+        flex: 1;
+        font-size: px2rem(14);
+        line-height: px2rem(16);
+        @include ellipsis;
+      }
+      .slide-contents-item-page {
       }
     }
   }

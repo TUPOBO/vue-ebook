@@ -44,19 +44,20 @@ export default {
   mixins: [ebookMixin],
   computed: {
     getSectionName() {
-      let sectionName = ''
-      if (this.bookAvailable && this.section) {
-        const sectionInfo = this.currentBook.section(this.section)
-        if (
-          sectionInfo &&
-          sectionInfo.href &&
-          this.currentBook &&
-          this.currentBook.navigation
-        ) {
-          sectionName = this.currentBook.navigation.get(sectionInfo.href).label
-        }
-      }
-      return sectionName
+      // let sectionName = ''
+      // if (this.bookAvailable && this.section) {
+      //   const sectionInfo = this.currentBook.section(this.section)
+      //   if (
+      //     sectionInfo &&
+      //     sectionInfo.href &&
+      //     this.currentBook &&
+      //     this.currentBook.navigation
+      //   ) {
+      //     sectionName = this.currentBook.navigation.get(sectionInfo.href).label
+      //   }
+      // }
+      // return sectionName
+      return this.section ? this.navigation[this.section].label : ''
     }
   },
   methods: {
