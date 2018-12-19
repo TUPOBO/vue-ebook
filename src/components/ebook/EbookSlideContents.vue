@@ -10,6 +10,7 @@
           class="slide-content-search-input"
           @click="showSearchPage()"
           :placeholder="$t(`book.searchHint`)"
+          v-model="searchText"
         >
       </div>
       <div
@@ -18,7 +19,7 @@
         @click="hideSearchPage()"
       >{{$t(`book.cancel`)}}</div>
     </div>
-    <div class="slide-contents-book-wrapper">
+    <div class="slide-contents-book-wrapper" v-show="!searchVisible">
       <div class="slide-contents-book-img-wrapper">
         <img :src="cover" alt="cover" class="slide-contents-book-img">
       </div>
@@ -34,7 +35,13 @@
         <div class="slide-contents-book-time">{{getReadTimeText()}}</div>
       </div>
     </div>
-    <scroll class="slide-contents-list" :top="156" :bottom="48" ref="scroll">
+    <scroll
+      class="slide-contents-list"
+      v-show="!searchVisible"
+      :top="156"
+      :bottom="48"
+      ref="scroll"
+    >
       <div class="slide-contents-item" v-for="(item, index) in navigation" :key="index">
         <span
           class="slide-contents-item-label"
@@ -44,6 +51,13 @@
         >{{item.label}}</span>
         <span class="slide-contents-item-page"></span>
       </div>
+    </scroll>
+    <scroll class="slide-search-list" :top="66" :bottom="48" v-show="searchVisible">
+      <div
+        class="slide-search-item"
+        v-for="(item, index) in searchList"
+        :key="index"
+      >{{item.excerpt}}</div>
     </scroll>
   </div>
 </template>|
@@ -55,7 +69,9 @@ import { px2rem } from '@/utils/utils'
 export default {
   data() {
     return {
-      searchVisible: false
+      searchVisible: false,
+      searchList: null,
+      searchText: ''
     }
   },
   components: {
@@ -68,6 +84,8 @@ export default {
     },
     hideSearchPage() {
       this.searchVisible = false
+      this.searchText = ''
+      this.searchList = null
     },
     contentItemStyle(item) {
       return {
@@ -91,6 +109,11 @@ export default {
         )
       ).then(results => Promise.resolve([].concat.apply([], results)))
     }
+  },
+  mounted() {
+    this.doSearch('added').then(lists => {
+      this.searchList = lists
+    })
   }
 }
 </script>
@@ -193,6 +216,17 @@ export default {
       }
       .slide-contents-item-page {
       }
+    }
+  }
+  .slide-search-list {
+    width: 100%;
+    padding: 0 px2rem(15);
+    box-sizing: border-box;
+    .slide-search-item {
+      font-size: px2rem(14);
+      line-height: px2rem(16);
+      padding: px2rem(20) 0;
+      box-sizing: border-box;
     }
   }
 }
