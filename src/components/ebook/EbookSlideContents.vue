@@ -74,10 +74,22 @@ export default {
         marginLeft: `${px2rem(item.level * 15)}rem`
       }
     },
+    // 点击目录跳转章节后，目录自动隐藏
     displayNavigation(target) {
       this.display(target, () => {
         this.hideTittleAndMenu()
       })
+    },
+    // 全文搜索
+    doSearch(q) {
+      return Promise.all(
+        this.currentBook.spine.spineItems.map(section =>
+          section
+            .load(this.currentBook.load.bind(this.currentBook))
+            .then(section.find.bind(section, q))
+            .finally(section.unload.bind(section))
+        )
+      ).then(results => Promise.resolve([].concat.apply([], results)))
     }
   }
 }
