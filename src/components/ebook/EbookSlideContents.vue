@@ -11,6 +11,7 @@
           @click="showSearchPage()"
           :placeholder="$t(`book.searchHint`)"
           v-model="searchText"
+          @keyup.enter.exact="search()"
         >
       </div>
       <div
@@ -47,7 +48,7 @@
           class="slide-contents-item-label"
           :class="{'selected': section === index}"
           :style="contentItemStyle(item)"
-          @click="displayNavigation(item.href)"
+          @click="displayContent(item.href)"
         >{{item.label}}</span>
         <span class="slide-contents-item-page"></span>
       </div>
@@ -57,7 +58,9 @@
         class="slide-search-item"
         v-for="(item, index) in searchList"
         :key="index"
-      >{{item.excerpt}}</div>
+        v-html="item.excerpt"
+        @click="displayContent(item.cfi, true)"
+      ></div>
     </scroll>
   </div>
 </template>|
@@ -92,13 +95,16 @@ export default {
         marginLeft: `${px2rem(item.level * 15)}rem`
       }
     },
-    // 点击目录跳转章节后，目录自动隐藏
-    displayNavigation(target) {
+    // 点击搜索结果或目录列表后，跳转相应位置，并自动隐藏侧边栏
+    displayContent(target, highlight = 'false') {
       this.display(target, () => {
         this.hideTittleAndMenu()
+        if (highlight) {
+          this.currentBook.rendition.annotations.highlight(target)
+        }
       })
     },
-    // 全文搜索
+    // 全文搜索算法
     doSearch(q) {
       return Promise.all(
         this.currentBook.spine.spineItems.map(section =>
@@ -108,12 +114,22 @@ export default {
             .finally(section.unload.bind(section))
         )
       ).then(results => Promise.resolve([].concat.apply([], results)))
+    },
+    // 根据搜索框内容搜索全文，并将关键字高亮显示
+    search() {
+      if (this.searchText && this.searchText.length > 0) {
+        this.doSearch(this.searchText).then(lists => {
+          this.searchList = lists
+          this.searchList.map(item => {
+            item.excerpt = item.excerpt.replace(
+              this.searchText,
+              `<span class="content-search-text">${this.searchText}</span>`
+            )
+            return item
+          })
+        })
+      }
     }
-  },
-  mounted() {
-    this.doSearch('added').then(lists => {
-      this.searchList = lists
-    })
   }
 }
 </script>
