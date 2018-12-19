@@ -28,7 +28,7 @@
         </div>
         <div class="text-wrapper">
           <span class="progress-section-text">{{getSectionName}}</span>
-          <span>({{ bookAvailable ? progress + '%' : '� 载中...' }})</span>
+          <span>({{ bookAvailable ? progress + '%' : '加载中...' }})</span>
         </div>
       </div>
     </div>
@@ -37,7 +37,6 @@
 
 <script>
 import { ebookMixin } from '@/utils/mixin'
-import { getReadTime } from '@/utils/localStorage'
 export default {
   data() {
     return {}

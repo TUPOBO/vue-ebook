@@ -11,7 +11,8 @@ const getters = {
   bookAvailable: state => state.book.bookAvailable,
   section: state => state.book.section,
   cover: state => state.book.cover,
-  metadata: state => state.book.metadata
+  metadata: state => state.book.metadata,
+  navigation: state => state.book.navigation
 }
 
 export default getters

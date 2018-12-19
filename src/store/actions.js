@@ -37,6 +37,9 @@ const actions = {
   },
   setMetadata({ commit }, metadata) {
     commit('SET_METADATA', metadata)
+  },
+  setNavigation({ commit }, navigation) {
+    commit('SET_NAVIGATION', navigation)
   }
 }
 
